@@ -163,3 +163,80 @@ body {
   background: linear-gradient(135deg, #00c896, #025045);
   color: white;
 }
+
+/* ---------- TENDERS ---------- */
+.tender-section {
+  margin-top: 3rem;
+}
+
+.tender-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.tender-card h3 {
+  margin: 0;
+}
+
+.tender-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tender-status {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.tender-budget {
+  margin: 0.6rem 0;
+  font-weight: 500;
+}
+
+/* ---------- AI SCORE ---------- */
+.ai-score {
+  margin-top: 0.8rem;
+}
+
+.ai-score span {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0.3rem 0;
+}
+
+.progress-bar.small {
+  height: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #00c896, #025045);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+/* ---------- AI METRICS ---------- */
+.ai-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 50px;
+  align-items: center;
+  gap: 0.6rem;
+}
