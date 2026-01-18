@@ -1,42 +1,70 @@
-import { motion } from "framer-motion";
-import Hero3D from "./components/Hero3D";
-import "./App.css";
+import { useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Float, OrbitControls, Sphere } from "@react-three/drei";
 
-function App() {
+import Sidebar from "./components/Sidebar";
+import TreasuryDashboard from "./pages/TreasuryDashboard";
+import BidderDashboard from "./pages/BidderDashboard";
+
+import "./styles/glass.css";
+
+type Role = "treasury" | "bidder";
+
+/* -------------------- 3D BACKGROUND -------------------- */
+function AnimatedBackground() {
   return (
-    <div className="app-container">
-      <section className="hero">
-        <div className="hero-left">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            TenderChain 🔗
-          </motion.h1>
+    <Canvas
+      camera={{ position: [0, 0, 6], fov: 60 }}
+      style={{ position: "fixed", inset: 0, zIndex: -1 }}
+    >
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[5, 5, 5]} intensity={1} />
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+      {[...Array(12)].map((_, i) => (
+        <Float key={i} speed={1.5} rotationIntensity={1} floatIntensity={2}>
+          <Sphere
+            args={[0.15, 32, 32]}
+            position={[
+              Math.random() * 8 - 4,
+              Math.random() * 6 - 3,
+              Math.random() * 4 - 2,
+            ]}
           >
-            Decentralized. Transparent. Intelligent Tendering.
-          </motion.p>
+            <meshStandardMaterial
+              color="#00c896"
+              emissive="#00c896"
+              emissiveIntensity={0.4}
+              transparent
+              opacity={0.8}
+            />
+          </Sphere>
+        </Float>
+      ))}
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Launch App
-          </motion.button>
-        </div>
-
-        <div className="hero-right glass">
-          <Hero3D />
-        </div>
-      </section>
-    </div>
+      <OrbitControls enableZoom={false} enablePan={false} />
+    </Canvas>
   );
 }
 
-export default App;
+/* -------------------- APP -------------------- */
+export default function App() {
+  const [role, setRole] = useState<Role>("treasury");
+
+  return (
+    <>
+      <AnimatedBackground />
+
+      <div className="app-layout">
+        <Sidebar role={role} setRole={setRole} />
+
+        <main className="main-content">
+          {role === "treasury" ? (
+            <TreasuryDashboard />
+          ) : (
+            <BidderDashboard />
+          )}
+        </main>
+      </div>
+    </>
+  );
+}
