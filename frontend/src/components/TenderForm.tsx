@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { FileText, Calendar, Coins } from "lucide-react";
+import { ethers } from "ethers";  
+import { useState } from "react"; 
 
 export default function TenderForm() {
   return (
