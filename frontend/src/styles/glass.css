@@ -138,3 +138,132 @@ body {
   font-size: 0.75rem;
   line-height: 1.4;
 }
+
+/* ================================
+   Tender Form – Glassmorphism UI
+   ================================ */
+
+.tender-form-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Glass Card */
+.tender-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tender-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.16);
+}
+
+/* Header */
+.tender-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #047857; /* emerald-700 */
+  margin-bottom: 1.5rem;
+}
+
+/* Form Layout */
+.tender-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Inputs & Textarea */
+.tender-input,
+.tender-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  color: #064e3b;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.tender-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.tender-input::placeholder,
+.tender-textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Focus State */
+.tender-input:focus,
+.tender-textarea:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Submit Button */
+.tender-submit {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+}
+
+.tender-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.55);
+}
+
+.tender-submit:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.35);
+}
+
+/* ================================
+   Dark Mode
+   ================================ */
+
+.dark .tender-card {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.dark .tender-title {
+  color: #34d399; /* emerald-400 */
+}
+
+.dark .tender-input,
+.dark .tender-textarea {
+  background: rgba(15, 23, 42, 0.85);
+  color: #d1fae5;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.dark .tender-input::placeholder,
+.dark .tender-textarea::placeholder {
+  color: #94a3b8;
+}
+
+.dark .tender-input:focus,
+.dark .tender-textarea:focus {
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
+}
