@@ -210,4 +210,5 @@ TenderChain AI demonstrates how **Web3 and AI** can:
 ## 👥 Team
 
 - **Thamsanqa Hadebe** – Founder & Lead Developer  
-- **Nelly Bila** – Co-Founder & Technical Contributor  
+- **Nelly Bila** – Co-Founder & Technical Contributor 
+- **Dimpho Pitsi** – Co-Founder & AI Engineer

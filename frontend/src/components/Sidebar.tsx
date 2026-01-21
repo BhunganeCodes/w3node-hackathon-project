@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { Shield, Briefcase, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Shield,
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  Layers,
+} from "lucide-react";
 import { useState } from "react";
 
 type Role = "treasury" | "bidder";
@@ -14,38 +20,56 @@ export default function Sidebar({ role, setRole }: SidebarProps) {
 
   return (
     <motion.aside
-      animate={{ width: collapsed ? 80 : 220 }}
+      animate={{ width: collapsed ? 84 : 240 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="sidebar"
+      className="sidebar glass"
     >
       {/* Header */}
       <div className="sidebar-header">
-        {!collapsed && <h2 className="sidebar-title">TenderChain</h2>}
+        <div className="brand">
+          <Layers size={22} />
+          {!collapsed && <span>TenderChain</span>}
+        </div>
 
         <button
           className="collapse-btn"
           onClick={() => setCollapsed(!collapsed)}
+          aria-label="Toggle sidebar"
         >
-          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          {collapsed ? <ChevronRight /> : <ChevronLeft />}
         </button>
       </div>
 
       {/* Navigation */}
-      <button
-        className={`sidebar-btn ${role === "treasury" ? "active" : ""}`}
-        onClick={() => setRole("treasury")}
-      >
-        <Shield size={20} />
-        {!collapsed && <span>Treasury</span>}
-      </button>
+      <nav className="sidebar-nav">
+        <button
+          className={`sidebar-link ${
+            role === "treasury" ? "active" : ""
+          }`}
+          onClick={() => setRole("treasury")}
+        >
+          <Shield size={20} />
+          {!collapsed && <span>Treasury</span>}
+        </button>
 
-      <button
-        className={`sidebar-btn ${role === "bidder" ? "active" : ""}`}
-        onClick={() => setRole("bidder")}
-      >
-        <Briefcase size={20} />
-        {!collapsed && <span>Bidder</span>}
-      </button>
+        <button
+          className={`sidebar-link ${
+            role === "bidder" ? "active" : ""
+          }`}
+          onClick={() => setRole("bidder")}
+        >
+          <Briefcase size={20} />
+          {!collapsed && <span>Bidder</span>}
+        </button>
+      </nav>
+
+      {/* Footer */}
+      {!collapsed && (
+        <div className="sidebar-footer">
+          <p>GovTech • Web3 • AI</p>
+          <small>W3Node Hackathon</small>
+        </div>
+      )}
     </motion.aside>
   );
 }

@@ -1,54 +1,95 @@
-// Tender Form COmponent
-
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FileText, Calendar, Coins } from "lucide-react";
+import { Card, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
 
 export default function TenderForm() {
+  const [form, setForm] = useState({
+    title: "",
+    reference: "",
+    department: "",
+    budget: "",
+    closingDate: "",
+    description: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Tender submitted:", form);
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="glass-card"
+      className="tender-form-container"
     >
-      <h2 className="form-title">Create New Tender</h2>
+      <Card className="tender-card">
+        <CardContent>
+          <h2 className="tender-title">Create New Tender</h2>
 
-      <form className="form-grid">
-        <div className="input-group">
-          <label>
-            <FileText size={16} /> Tender Title
-          </label>
-          <input type="text" placeholder="Supply of Medical Equipment" />
-        </div>
+          <form onSubmit={handleSubmit} className="tender-form">
+            <input
+              name="title"
+              placeholder="Tender Title"
+              value={form.title}
+              onChange={handleChange}
+              className="tender-input"
+            />
 
-        <div className="input-group">
-          <label>Description</label>
-          <textarea placeholder="Detailed scope of work..." />
-        </div>
+            <input
+              name="reference"
+              placeholder="Tender Reference Number"
+              value={form.reference}
+              onChange={handleChange}
+              className="tender-input"
+            />
 
-        <div className="form-row">
-          <div className="input-group">
-            <label>
-              <Coins size={16} /> Budget (ZAR)
-            </label>
-            <input type="number" placeholder="5000000" />
-          </div>
+            <input
+              name="department"
+              placeholder="Issuing Department"
+              value={form.department}
+              onChange={handleChange}
+              className="tender-input"
+            />
 
-          <div className="input-group">
-            <label>
-              <Calendar size={16} /> Closing Date
-            </label>
-            <input type="date" />
-          </div>
-        </div>
+            <input
+              name="budget"
+              type="number"
+              placeholder="Estimated Budget (ZAR)"
+              value={form.budget}
+              onChange={handleChange}
+              className="tender-input"
+            />
 
-        <div className="input-group">
-          <label>AI Evaluation Criteria</label>
-          <textarea placeholder="Compliance, pricing, experience, BBBEE..." />
-        </div>
+            <input
+              name="closingDate"
+              type="date"
+              value={form.closingDate}
+              onChange={handleChange}
+              className="tender-input"
+            />
 
-        <button className="primary-btn">Deploy Tender</button>
-      </form>
+            <textarea
+              name="description"
+              placeholder="Tender Description"
+              rows={4}
+              value={form.description}
+              onChange={handleChange}
+              className="tender-textarea"
+            />
+
+            <Button type="submit" className="tender-submit">
+              Publish Tender
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </motion.div>
   );
 }
