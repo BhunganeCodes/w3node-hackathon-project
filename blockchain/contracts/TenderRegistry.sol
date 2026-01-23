@@ -1,103 +1,51 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.26;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+interface ITenderRegistry {
+    function createTender(string calldata title) external returns (uint256);
+    function acceptBid(uint256 tenderId, address bidder, uint256 amount) external;
+}
 
-/**
-* @title TenderScoringRegistry
-* @notice Stores immutable AI evaluation scores on-chain
-* @dev Full reports live off-chain (IPFS); only hashes are stored
-*/
-contract TenderScoringRegistry is Ownable {
-
-    constructor() Ownable(msg.sender) {}
-
-    /// -------------------------
-    /// Roles
-    /// -------------------------
-
-    /// @notice Authorized AI oracle / backend
-    address public scoringOracle;
-
-    modifier onlyOracle() {
-        require(msg.sender == scoringOracle, "Not authorized oracle");
-        _;
-    }
-
-    /// -------------------------
-    /// Data Structures
-    /// -------------------------
-
-    struct Score {
-        uint16 totalScore;      // 0–10000 (2 decimal precision)
-        bytes32 reportHash;     // Hash of JSON/PDF report
+contract TenderRegistry is ITenderRegistry {
+    uint256 public nextTenderId;
+    
+    struct Tender {
+        string title;
+        address[] bidders;
+        mapping(address => uint256) bids;
         bool exists;
     }
 
-    /// tenderId => bidder => Score
-    mapping(uint256 => mapping(address => Score)) public scores;
+    mapping(uint256 => Tender) private tenders;
 
-    /// -------------------------
-    /// Events
-    /// -------------------------
+    event TenderCreated(uint256 indexed tenderId, string title);
+    event BidAccepted(uint256 indexed tenderId, address indexed bidder, uint256 amount);
 
-    event OracleUpdated(address indexed oracle);
-
-    event ScoreSubmitted(
-        uint256 indexed tenderId,
-        address indexed bidder,
-        uint16 totalScore,
-        bytes32 reportHash
-    );
-
-    /// -------------------------
-    /// Admin Functions
-    /// -------------------------
-
-    function setScoringOracle(address oracle) external onlyOwner {
-        require(oracle != address(0), "Invalid oracle");
-        scoringOracle = oracle;
-        emit OracleUpdated(oracle);
+    function createTender(string calldata title) external returns (uint256) {
+        uint256 tenderId = nextTenderId++;
+        Tender storage t = tenders[tenderId];
+        t.title = title;
+        t.exists = true;
+        emit TenderCreated(tenderId, title);
+        return tenderId;
     }
 
-    /// -------------------------
-    /// Oracle Functions
-    /// -------------------------
-
-    function submitScore(
-        uint256 tenderId,
-        address bidder,
-        uint16 totalScore,
-        bytes32 reportHash
-    ) external onlyOracle {
-        require(bidder != address(0), "Invalid bidder");
-        require(totalScore <= 10_000, "Score out of range");
-        require(reportHash != bytes32(0), "Invalid report hash");
-        require(!scores[tenderId][bidder].exists, "Score already submitted");
-
-        scores[tenderId][bidder] = Score({
-            totalScore: totalScore,
-            reportHash: reportHash,
-            exists: true
-        });
-
-        emit ScoreSubmitted(tenderId, bidder, totalScore, reportHash);
+    function acceptBid(uint256 tenderId, address bidder, uint256 amount) external {
+        require(tenders[tenderId].exists, "Tender does not exist");
+        Tender storage t = tenders[tenderId];
+        if (t.bids[bidder] == 0) {
+            t.bidders.push(bidder);
+        }
+        t.bids[bidder] = amount;
+        emit BidAccepted(tenderId, bidder, amount);
     }
 
-    /// -------------------------
-    /// View Functions
-    /// -------------------------
+    // helper for tests
+    function getBid(uint256 tenderId, address bidder) external view returns (uint256) {
+        return tenders[tenderId].bids[bidder];
+    }
 
-    function getScore(
-        uint256 tenderId,
-        address bidder
-    )
-        external
-        view
-        returns (uint16 totalScore, bytes32 reportHash)
-    {
-        Score memory s = scores[tenderId][bidder];
-        require(s.exists, "Score not found");
-        return (s.totalScore, s.reportHash);
+    function getBidders(uint256 tenderId) external view returns (address[] memory) {
+        return tenders[tenderId].bidders;
     }
 }
