@@ -1,29 +1,37 @@
-// This service communicates with the AI backend (FastAPI)
+const API_BASE_URL = "http://localhost:8000/api";
 
-interface TenderData {
+interface ScoreTenderPayload {
   title: string;
   description: string;
   documentHash: string;
 }
 
-interface AIResponse {
-  score: number;
-  riskFlags: string[];
+interface ScoreTenderResponse {
+  success: boolean;
+  score: number; // AI score returned by backend
+  confidence?: number; // optional if backend sends confidence
 }
 
-export const scoreTender = async (tenderData: TenderData): Promise<AIResponse> => {
-  // For now, we'll call the AI backend running on localhost:8000
-  const response = await fetch('http://localhost:8000/score', {
-    method: 'POST',
+export async function scoreTender(payload: ScoreTenderPayload): Promise<ScoreTenderResponse> {
+  const response = await fetch(`${API_BASE_URL}/evaluate`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(tenderData),
+    body: JSON.stringify({ bidData: payload }),
   });
 
   if (!response.ok) {
-    throw new Error('Failed to score tender');
+    const text = await response.text();
+    throw new Error(`AI backend error: ${text}`);
   }
 
-  return response.json();
-};
+  const data = await response.json();
+
+  // Backend returns: { success: true, score: { score: number, confidence?: number } }
+  return {
+    success: data.success,
+    score: data.score.score,
+    confidence: data.score.confidence,
+  };
+}
