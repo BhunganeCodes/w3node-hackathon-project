@@ -1,3 +1,15 @@
+// import TenderForm from "./components/TenderForm";
+
+// function App() {
+//   return <TenderForm />;
+// }
+
+// export default App;
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
