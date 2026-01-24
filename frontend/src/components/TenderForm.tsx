@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { uploadToIPFS } from '../services/ipfs';
+import { uploadToIPFS } from '../services/ipfs';
 import { scoreTender } from '../services/aiBackend';
 import { createTenderWithScore } from '../services/blockchain';
 
