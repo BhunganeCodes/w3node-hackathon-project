@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../ui/card';
+import { Button } from '../ui/button';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Upload, FileText, Shield, Bot, ExternalLink } from 'lucide-react';

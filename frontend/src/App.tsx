@@ -23,11 +23,11 @@ import {
   Moon
 } from 'lucide-react';
 import { TenderForm } from './components/tender/TenderForm';
-// import { Dashboard } from './components/dashboard/Dashboard';
-// import { TenderList } from './components/tender/TenderList';
-// import { WalletConnect } from './components/wallet/WalletConnect';
+import { Dashboard } from './components/dashboard/Dashboard';
+import { TenderList } from './components/tender/TenderList';
+import { WalletConnect } from './components/wallet/WalletConnect';
 import { apiService } from './services/api';
-// import { blockchainService } from './services/blockchain';
+import { blockchainService } from './services/blockchain';
 import './styles/globals.css';
 
 // Sidebar

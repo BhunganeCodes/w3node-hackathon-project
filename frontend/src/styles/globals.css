@@ -1,0 +1,27 @@
+/* globals.css */
+
+/* Reset and global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb; /* light gray */
+  color: #111827; /* dark gray text */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: inherit;
+}
