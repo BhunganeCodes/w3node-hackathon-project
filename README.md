@@ -67,36 +67,19 @@ The AI engine:
 
 ## 🧱 System Architecture
 
-┌─────────────────────────┐
-│ Frontend │
-│ React + TypeScript │
-│ MetaMask SDK │
-└───────────┬─────────────┘
-│ Wallet Interaction
-▼
-┌─────────────────────────┐
-│ Smart Contracts │
-│ Solidity │
-│ ─ Tender Registry │
-│ ─ Award Logic │
-│ ─ Treasury Escrow │
-└───────────┬─────────────┘
-│ Oracle / API Bridge
-▼
-┌─────────────────────────┐
-│ AI Engine │
-│ Python + FastAPI │
-│ ─ Scoring Model │
-│ ─ Fraud Detection │
-│ ─ Explainability │
-└───────────┬─────────────┘
-│
-▼
-┌─────────────────────────┐
-│ IPFS / Off-chain DB │
-│ Tender Documents │
-│ Evaluation Reports │
-└─────────────────────────┘
+│ Frontend │ React + TypeScript │ MetaMask SDK │ > Wallet Interaction 
+                                
+                                ▼
+
+│ Smart Contracts │ Solidity │ ─ Tender Registry │ ─ Award Logic │ ─ Treasury Escrow │ Oracle / API Bridge │
+                                
+                                ▼
+
+│ AI Engine │ Python + FastAPI │ ─ Scoring Model │ ─ Fraud Detection │ ─ Explainability │
+
+                                ▼
+
+│ IPFS / Off-chain DB │ Tender Documents │ Evaluation Reports │
 
 
 ---
